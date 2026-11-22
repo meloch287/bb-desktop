@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     strategy:
@@ -65,3 +69,45 @@ jobs:
             dist/bb-mac-*.zip
             dist/mac/latest.json
             dist/SHA256SUMS-*.txt
+
+  stage-release:
+    needs: build
+    if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: bb-*
+          merge-multiple: true
+          path: release-assets
+      - name: Stage verified installers in a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(node -p 'require("./package.json").version')
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          tag="v$version"
+          (cd release-assets && sha256sum -c SHA256SUMS-*.txt)
+          mkdir staged-release
+          cp release-assets/bb-setup.exe release-assets/bb-setup.exe.blockmap release-assets/latest.yml staged-release/
+          for arch in arm64 x64; do
+            file="bb-mac-$arch-$version.zip"
+            cp "release-assets/$file" "staged-release/$file"
+            cp "release-assets/$file" "staged-release/bb-mac-$arch.zip"
+          done
+          cp release-assets/mac/latest.json staged-release/latest-mac.json
+          (cd staged-release && sha256sum * > SHA256SUMS.txt)
+          if gh release view "$tag" --json isDraft > release-state.json; then
+            test "$(node -p 'JSON.parse(require("fs").readFileSync("release-state.json")).isDraft')" = true
+            gh release edit "$tag" --draft --target "$GITHUB_SHA" --title "bb $version" --notes-file RELEASE-NOTES.md
+          else
+            gh release create "$tag" --draft --target "$GITHUB_SHA" --title "bb $version" --notes-file RELEASE-NOTES.md
+          fi
+          gh release upload "$tag" staged-release/* --clobber
