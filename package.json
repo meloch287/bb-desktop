@@ -1,0 +1,29 @@
+{
+  "name": "bb-ru-desktop",
+  "productName": "bb",
+  "version": "1.5.0",
+  "description": "bb - рабочая зона GPT и Claude",
+  "author": "AI-bot",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "src/main.js",
+  "dependencies": {
+    "electron-updater": "6.8.11"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.cjs scripts/*.test.cjs",
+    "check": "node --check src/main.js && node --check scripts/prepare-resources.cjs && node --check scripts/build.cjs",
+    "prepare:resources": "node scripts/prepare-resources.cjs",
+    "build:win": "node scripts/build.cjs win x64",
+    "build:mac:arm64": "node scripts/build.cjs mac arm64",
+    "build:mac:x64": "node scripts/build.cjs mac x64"
+  },
+  "devDependencies": {
+    "@electron/asar": "3.4.1",
+    "@electron/fuses": "2.1.3",
+    "electron": "44.9.3",
+    "electron-builder": "26.18.0",
+    "linkedom": "0.18.12",
+    "resedit": "3.1.1"
+  }
+}

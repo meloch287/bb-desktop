@@ -1,0 +1,44 @@
+:root { font: 15px/1.55 "Segoe UI", system-ui, sans-serif; color: #edf0f5; background: #101319; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px; }
+main { width: min(560px, 100%); }
+.logo { border-radius: 18px; display: block; margin-bottom: 20px; }
+h1 { font-size: 26px; margin: 0 0 10px; font-weight: 600; }
+.lead { color: #b9c0cc; margin: 0 0 18px; }
+ol { padding-left: 22px; margin: 0 0 10px; }
+li { margin: 4px 0; }
+.hint, .small { color: #8b93a1; font-size: 13px; }
+form { display: flex; gap: 10px; margin: 20px 0 8px; }
+input { flex: 1; min-width: 0; padding: 11px 12px; border-radius: 10px; border: 1px solid #2c3340; background: #181c24; color: inherit; font: inherit; font-size: 13px; }
+input:focus { outline: 2px solid #4f7cff; border-color: transparent; }
+button { padding: 11px 18px; border: 0; border-radius: 10px; background: #edf0f5; color: #101319; font: inherit; font-weight: 600; cursor: pointer; }
+button:disabled { opacity: .6; cursor: default; }
+#status { min-height: 22px; color: #b9c0cc; }
+#status.error { color: #ff8a7a; }
+body.setup { padding: 24px; }
+.bar { height: 8px; border-radius: 4px; background: #232936; overflow: hidden; margin: 12px 0 16px; }
+#fill { height: 100%; width: 0; background: #4f7cff; transition: width .2s; }
+body.prefs { display: block; padding: 22px 26px; }
+.prefs main { width: auto; }
+.prefs h1 { font-size: 22px; margin-bottom: 14px; }
+.prefs h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: #8b93a1; margin: 18px 0 6px; font-weight: 600; }
+.prefs section { border-top: 1px solid #232936; }
+.prefs .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; }
+.prefs .row.sub { padding-left: 14px; }
+.prefs .row > span { display: flex; flex-direction: column; }
+.prefs small { color: #8b93a1; font-size: 12px; }
+.prefs input[type=checkbox] { width: 40px; height: 22px; appearance: none; background: #2c3340; border-radius: 11px; position: relative; cursor: pointer; transition: background .15s; flex: none; }
+.prefs input[type=checkbox]::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #edf0f5; transition: transform .15s; }
+.prefs input[type=checkbox]:checked { background: #4f7cff; }
+.prefs input[type=checkbox]:checked::after { transform: translateX(18px); }
+.prefs input[type=checkbox]:disabled { opacity: .4; cursor: default; }
+.prefs select { background: #181c24; color: inherit; border: 1px solid #2c3340; border-radius: 8px; padding: 6px 10px; font: inherit; }
+.prefs input[type=range] { width: 180px; accent-color: #4f7cff; }
+.seg { display: inline-flex; border: 1px solid #2c3340; border-radius: 8px; overflow: hidden; }
+.seg input { display: none; }
+.seg label { padding: 5px 12px; cursor: pointer; color: #b9c0cc; }
+.seg input:checked + label { background: #2c3340; color: #edf0f5; }
+.seg input:disabled + label { opacity: .4; cursor: default; }
+#restart { margin-top: 18px; padding: 12px 14px; border-radius: 10px; background: #1c2230; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#restart button { padding: 8px 14px; }
+.prefs .row > span.seg { flex-direction: row; }

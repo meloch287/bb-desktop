@@ -1,0 +1,26 @@
+{
+  "darwin-arm64": {
+    "file": "bb-mac-arm64-1.4.1.zip",
+    "url": "https://bb.2.29.166.225.sslip.io/download/desktop/mac/bb-mac-arm64-1.4.1.zip",
+    "sha256": "56748028f7fefd6aec4876c9572f2bfb3a66664595b394f26c583338927f394b",
+    "electron": "44.9.3"
+  },
+  "win32-x64": {
+    "file": "bb-setup-1.4.2.exe",
+    "url": "https://github.com/meloch287/bb-desktop/releases/download/v1.4.2/bb-setup.exe",
+    "mirrors": ["https://bb.2.29.166.225.sslip.io/download/desktop/bb-setup.exe"],
+    "sha256": "5c0d331fa27ab711b2450bb935cc586e194dc668a94137e8afa6036ea2337467",
+    "electron": "44.9.3"
+  },
+  "darwin-x64": {
+    "file": "bb-mac-x64-1.4.1.zip",
+    "url": "https://bb.2.29.166.225.sslip.io/download/desktop/mac/bb-mac-x64-1.4.1.zip",
+    "sha256": "2e9007bd089f04070016b73cfc7064165218a9e6037c3e1938fa4c30af00b1f5",
+    "electron": "44.9.3"
+  },
+  "7zip-darwin": {
+    "file": "7z2606-mac.tar.xz",
+    "url": "https://www.7-zip.org/a/7z2606-mac.tar.xz",
+    "sha256": "b6f17920b4240940461dac8ef4009891881ac44d2a5ead625ede2ec8472185dd"
+  }
+}

@@ -1,0 +1,67 @@
+name: Desktop builds
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, "release/**"]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: win
+            arch: x64
+            script: build:win
+          - os: macos-latest
+            target: mac
+            arch: arm64
+            script: build:mac:arm64
+          - os: macos-15-intel
+            target: mac
+            arch: x64
+            script: build:mac:x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.23.3"
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+      - run: npm run ${{ matrix.script }}
+      - name: Windows upgrade and native launch
+        if: matrix.target == 'win'
+        shell: pwsh
+        run: ./scripts/smoke-windows.ps1
+      - name: Verify Mac signature
+        if: matrix.target == 'mac'
+        shell: bash
+        run: |
+          app_dir="dist/mac"
+          if [ "${{ matrix.arch }}" = arm64 ]; then app_dir="dist/mac-arm64"; fi
+          codesign --verify --deep --strict "$app_dir/bb.app"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bb-${{ matrix.target }}-${{ matrix.arch }}
+          if-no-files-found: error
+          path: |
+            dist/bb-setup.exe
+            dist/bb-setup.exe.blockmap
+            dist/latest.yml
+            dist/bb-mac-*.zip
+            dist/mac/latest.json
+            dist/SHA256SUMS-*.txt

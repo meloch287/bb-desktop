@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'">
+<title>Настройки приложения</title>
+<link rel="stylesheet" href="local.css">
+</head>
+<body class="prefs">
+<main>
+  <h1>Настройки приложения</h1>
+
+  <section>
+    <h2>Оформление</h2>
+    <label class="row"><span><b>Жидкое стекло</b><small id="glass-note">Фон окна просвечивает размытым рабочим столом</small></span><input type="checkbox" id="glass"></label>
+    <div class="row sub" id="material-row"><span>Материал</span>
+      <span class="seg"><input type="radio" name="material" id="m-acrylic" value="acrylic"><label for="m-acrylic">Акрил</label><input type="radio" name="material" id="m-mica" value="mica"><label for="m-mica">Мика</label></span></div>
+    <label class="row sub" id="opacity-row"><span>Плотность фона <small id="opacity-val"></small></span><input type="range" id="glassOpacity" min="40" max="95" step="1"></label>
+    <label class="row"><span><b>Анимации интерфейса</b><small>Выключи, если ПК слабый</small></span><input type="checkbox" id="animations"></label>
+  </section>
+
+  <section>
+    <h2>Ответы ИИ</h2>
+    <div class="row"><span><b>Плавное появление ответа</b><small>Новые абзацы, списки и код появляются мягко, без рывков</small></span>
+      <select id="smoothAnswers"><option value="off">Выкл</option><option value="normal">Обычно</option><option value="soft">Мягко</option></select></div>
+  </section>
+
+  <section>
+    <h2>Скорость</h2>
+    <label class="row"><span><b>Проверка орфографии</b><small>Если набор текста подтормаживает — выключи</small></span><input type="checkbox" id="spellcheck"></label>
+    <label class="row"><span><b>Плавная прокрутка</b><small>После перезапуска</small></span><input type="checkbox" id="smoothScroll"></label>
+    <label class="row"><span><b>Аппаратное ускорение</b><small>Видеокарта рисует интерфейс. Выключи, только если появились артефакты. После перезапуска</small></span><input type="checkbox" id="gpu"></label>
+  </section>
+
+  <div id="restart" hidden><span>Часть настроек включится после перезапуска.</span><button id="restart-btn">Перезапустить</button></div>
+</main>
+<script src="settings-page.js"></script>
+</body>
+</html>

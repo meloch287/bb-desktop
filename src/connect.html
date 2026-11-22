@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'">
+<title>bb — подключение</title>
+<link rel="stylesheet" href="local.css">
+</head>
+<body>
+<main>
+  <img class="logo" src="icon.png" alt="" width="72" height="72">
+  <h1>Подключи свою рабочую зону</h1>
+  <p class="lead">bb открывает твои диалоги GPT и Claude, проекты и файлы с нашего сервера. Нужна личная ссылка подключения — один раз.</p>
+  <ol>
+    <li>Открой бота в Telegram и отправь <b>/desktop</b>.</li>
+    <li>Скопируй ссылку подключения из ответа.</li>
+    <li>Вставь её сюда и нажми «Подключить».</li>
+  </ol>
+  <p class="hint">Или: в bb открой «Мой профиль» → «Подключить устройство» и скопируй ссылку.</p>
+  <form id="form">
+    <input id="link" type="text" autocomplete="off" spellcheck="false" placeholder="https://u…bb.200-165-236-8.sslip.io/__app/…" autofocus>
+    <button id="go" type="submit">Подключить</button>
+  </form>
+  <p id="status" role="status"></p>
+  <p class="small">Ссылка хранится на этом компьютере в зашифрованном виде. Не пересылай её никому: по ней открывается твоя рабочая зона.</p>
+</main>
+<script src="connect.js"></script>
+</body>
+</html>
