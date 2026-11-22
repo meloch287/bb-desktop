@@ -695,20 +695,29 @@ test("Windows 1.4.2 explicit edge override keeps proxy priority over direct and 
   assert.equal(app.currentMode, "proxy-mirror");
 });
 
-test("Windows override reads executable directory first and falls back to user data", () => {
+for (const [style, paths, execPath, userData] of [
+  ["Windows", path.win32, "C:\\installed\\bb.exe", "C:\\data"],
+  ["POSIX", path.posix, "/installed/bb.exe", "/data"],
+]) test(`${style} override reads executable directory first and falls back to user data`, () => {
   const source = fs.readFileSync(path.join(sourceRoot, "src/main.js"), "utf8");
   for (const first of [null, "broken", { outbound: { protocol: "first" } }]) {
+    const executableProfile = paths.join(paths.dirname(execPath), "edge-override.json");
+    const userProfile = paths.join(userData, "edge-override.json");
+    const reads = [];
     const context = vm.createContext({
-      dirname: path.dirname, join: path.join, process: { execPath: "/installed/bb.exe" },
-      app: { getPath: () => "/data" },
+      dirname: paths.dirname, join: paths.join, process: { execPath },
+      app: { getPath: () => userData },
       readFileSync(file) {
-        const data = file.startsWith("/installed/") ? first : { outbound: { protocol: "second" } };
+        reads.push(file);
+        if (file !== executableProfile && file !== userProfile) throw new Error(`Unexpected fixture path: ${file}`);
+        const data = file === executableProfile ? first : { outbound: { protocol: "second" } };
         if (data === null) throw new Error("not found");
         return data === "broken" ? "{" : JSON.stringify(data);
       },
     });
     vm.runInContext(section(source, "function overrideEdge()", "async function startProxy()"), context);
     assert.equal(vm.runInContext("overrideEdge().outbound.protocol", context), first?.outbound ? "first" : "second");
+    assert.deepEqual(reads, first?.outbound ? [executableProfile] : [executableProfile, userProfile]);
   }
 });
 

@@ -31,6 +31,7 @@ module.exports = {
     category: "public.app-category.productivity",
     icon: `build/resources/darwin-${macArch}/icon.icns`,
     identity: "-",
+    signIgnore: ["/Resources/xray/xray$"],
     hardenedRuntime: false,
     notarize: false,
     extraResources: [{ from: "build/resources/darwin-${arch}/xray", to: "xray" }],

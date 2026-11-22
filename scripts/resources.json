@@ -8,7 +8,7 @@
   "win32-x64": {
     "file": "bb-setup-1.4.2.exe",
     "url": "https://github.com/meloch287/bb-desktop/releases/download/v1.4.2/bb-setup.exe",
-    "mirrors": ["https://bb.2.29.166.225.sslip.io/download/desktop/bb-setup.exe"],
+    "mirrors": ["https://bb.2.29.166.225.sslip.io/download/desktop/bb-setup-1.4.2.exe"],
     "sha256": "5c0d331fa27ab711b2450bb935cc586e194dc668a94137e8afa6036ea2337467",
     "electron": "44.9.3"
   },
